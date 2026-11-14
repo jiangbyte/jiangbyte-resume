@@ -1,0 +1,18 @@
+---
+import { links } from '@/data/projects';
+import { projectsNote } from '@/data/resume';
+---
+
+<section id="projects" class="mx-auto w-full scroll-mt-24 px-6 pb-8">
+  <h2 class="text-xl font-semibold tracking-tight text-foreground">个人项目</h2>
+  <p class="body-text mt-3 text-muted-foreground">{projectsNote}</p>
+  <p class="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm">
+    <a
+      href={links.githubOrg}
+      class="text-primary transition hover:underline"
+      rel="noopener noreferrer"
+      target="_blank">GitHub · jiangfolio →</a
+    >
+    <a href={links.blogProjects} class="text-primary transition hover:underline">博客项目集 →</a>
+  </p>
+</section>

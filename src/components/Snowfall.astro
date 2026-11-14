@@ -1,0 +1,66 @@
+---
+/**
+ * 全页雪花飘落：仅 lively + 雪花开关开启时播放。
+ */
+---
+
+<canvas
+  id="site-snowfall"
+  class="pointer-events-none fixed inset-0 z-[1] h-dvh w-dvw"
+  aria-hidden="true"
+  data-snowfall
+></canvas>
+
+<script>
+  import { SnowField } from '@/lib/snow-field';
+  import { shouldRunSnow } from '@/lib/prefs';
+
+  let field: SnowField | null = null;
+  let canvas: HTMLCanvasElement | null = null;
+
+  function syncSize() {
+    if (!field || !canvas) return;
+    field.resize(window.innerWidth, window.innerHeight);
+  }
+
+  function start() {
+    canvas = document.querySelector<HTMLCanvasElement>('[data-snowfall]');
+    if (!canvas) return;
+    if (!field) field = new SnowField(canvas);
+    syncSize();
+    field.start();
+    canvas.dataset.active = 'true';
+  }
+
+  function stop() {
+    field?.stop();
+    if (canvas) delete canvas.dataset.active;
+  }
+
+  function apply() {
+    if (shouldRunSnow()) start();
+    else stop();
+  }
+
+  apply();
+  window.addEventListener('resize', () => {
+    if (field?.running) syncSize();
+  });
+  window.addEventListener('home:prefs-change', apply);
+</script>
+
+<style>
+  #site-snowfall {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+
+  #site-snowfall[data-active='true'] {
+    opacity: 1;
+  }
+
+  html.motion-off #site-snowfall,
+  html.snow-off #site-snowfall {
+    opacity: 0 !important;
+  }
+</style>

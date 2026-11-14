@@ -1,0 +1,198 @@
+@import 'tailwindcss';
+@import './tokens.css';
+
+/* 使 dark: 工具类响应 html.dark（主题切换才会生效） */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-border: hsl(var(--border));
+  --color-ring: hsl(var(--ring));
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 0.25rem);
+  --radius-2xl: calc(var(--radius) + 0.5rem);
+  /* UI 壳层字体：不受阅读预设影响 */
+  --font-sans:
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: hsl(var(--border));
+  }
+
+  :root {
+    /* 阅读区默认字族（仅作用于 #site-content） */
+    --reader-font-stack:
+      'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Noto Sans SC',
+      system-ui, sans-serif;
+    --ui-font-stack: var(--font-sans);
+  }
+
+  /*
+   * html 固定 16px：设置弹窗 / 浮动按钮的 rem 不随阅读字号缩放。
+   * 阅读字号只作用在 #site-content。
+   */
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  html.motion-off {
+    scroll-behavior: auto;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--ui-font-stack);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* —— 阅读偏好只作用 main：顶栏 / 页脚 / 设置弹窗不受影响 —— */
+  #site-content main {
+    width: min(100%, var(--reader-measure, 48rem));
+    margin-inline: auto;
+    font-family: var(--reader-font-stack);
+    font-size: var(--reader-font-size, 16px);
+    line-height: var(--reader-line-height, 1.8);
+  }
+
+  #site-content main :is(h1, h2, h3, h4, h5, h6, p, li, dt, dd, a, span, time) {
+    font-family: inherit;
+  }
+
+  /* rem 标题按 main 字号换成 em，随阅读字号缩放且不碰弹窗 */
+  #site-content main .text-5xl {
+    font-size: 3em;
+  }
+  #site-content main .text-4xl {
+    font-size: 2.25em;
+  }
+  #site-content main .text-xl {
+    font-size: 1.25em;
+  }
+  #site-content main .text-lg {
+    font-size: 1.125em;
+  }
+  #site-content main .text-base {
+    font-size: 1em;
+  }
+  #site-content main .text-sm {
+    font-size: 0.875em;
+  }
+  #site-content main .text-xs {
+    font-size: 0.75em;
+  }
+
+  #site-content main .body-text {
+    font-size: 1em;
+    line-height: inherit;
+  }
+
+  html.reader-justify #site-content main {
+    text-align: justify;
+  }
+
+  /*
+   * 设置弹窗 + 浮动控件：彻底隔离阅读偏好
+   * （即便误写全局样式，这里也用固定值盖住）
+   */
+  #settings-panel,
+  #settings-panel * {
+    font-family: var(--ui-font-stack) !important;
+  }
+
+  #settings-panel {
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+    text-align: left !important;
+    max-width: none !important;
+    width: 20rem;
+  }
+
+  @media (min-width: 640px) {
+    #settings-panel {
+      width: 22rem;
+    }
+  }
+
+  [data-settings-toggle],
+  #fab-top,
+  #fab-bottom {
+    font-size: 16px;
+    font-family: var(--ui-font-stack);
+    line-height: 1;
+  }
+
+  /* 阅读字体预设 → 只改变量，由 #site-content 消费 */
+  html[data-font-preset='round'] {
+    --reader-font-stack:
+      'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Noto Sans SC',
+      system-ui, sans-serif;
+  }
+
+  html[data-font-preset='system'] {
+    --reader-font-stack:
+      -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
+      'Noto Sans SC', sans-serif;
+  }
+
+  html[data-font-preset='serif'] {
+    --reader-font-stack: 'Songti SC', 'Noto Serif CJK SC', 'Noto Serif SC', 'Source Han Serif SC', 'SimSun',
+      serif;
+  }
+
+  html[data-font-preset='wenkai'] {
+    --reader-font-stack: 'LXGW WenKai', 'LXGW WenKai Screen', 'PingFang SC', serif;
+  }
+
+  html[data-reader-font='local'] {
+    --reader-font-stack: var(--reader-font-family), 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% -10%, hsl(var(--primary) / 0.12), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 90% 10%, hsl(207 48% 90% / 0.45), transparent 50%),
+      radial-gradient(ellipse 50% 35% at 50% 100%, hsl(var(--primary) / 0.06), transparent 55%);
+  }
+
+  .dark body::before {
+    background:
+      radial-gradient(ellipse 80% 50% at 20% -10%, hsl(var(--primary) / 0.14), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 90% 10%, hsl(207 40% 30% / 0.2), transparent 50%),
+      radial-gradient(ellipse 50% 35% at 50% 100%, hsl(var(--primary) / 0.08), transparent 55%);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+}

@@ -1,0 +1,80 @@
+---
+import FloatingControls from '@/components/FloatingControls.astro';
+import ScrollProgress from '@/components/ScrollProgress.astro';
+import Snowfall from '@/components/Snowfall.astro';
+import '@/styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Charlie's Resume",
+  description = "Charlie's Resume — AI 全栈 / 贵州",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    {/* 防 FOUC：主题 / 阅读 / 动效 */}
+    <script is:inline>
+      (() => {
+        try {
+          const root = document.documentElement;
+          const theme = localStorage.getItem('theme');
+          const dark =
+            theme === 'dark' ||
+            ((theme === null || theme === '') &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches);
+          root.classList.toggle('dark', dark);
+
+          const fontSize = localStorage.getItem('reader-font-size') || '16';
+          const lineHeight = localStorage.getItem('reader-line-height') || '1.8';
+          // 阅读变量仅影响 #site-content，不缩放设置弹窗
+          root.style.setProperty('--reader-font-size', fontSize + 'px');
+          root.style.setProperty('--reader-line-height', lineHeight);
+          const measure = localStorage.getItem('reader-measure');
+          if (measure) {
+            root.style.setProperty('--reader-measure', Number(measure) * 0.5 * Number(fontSize) + 'px');
+          }
+          const localFont = localStorage.getItem('reader-font-family');
+          if (localFont) {
+            root.dataset.readerFont = 'local';
+            root.style.setProperty('--reader-font-family', '"' + localFont.replace(/"/g, '') + '"');
+          } else {
+            root.dataset.fontPreset = localStorage.getItem('reader-font-preset') || 'round';
+          }
+          if (localStorage.getItem('reader-justify') === 'true') root.classList.add('reader-justify');
+
+          let motion = localStorage.getItem('site-motion-level') || 'lively';
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) motion = 'reduced';
+          root.dataset.motion = motion;
+          root.classList.toggle('motion-off', motion === 'reduced');
+          const snow = localStorage.getItem('site-wave');
+          const snowOn = snow === null ? true : snow !== 'false';
+          root.classList.toggle('snow-off', !snowOn || motion !== 'lively');
+          const progress = localStorage.getItem('site-scroll-progress');
+          root.classList.toggle('scroll-progress-off', progress === 'false');
+        } catch {
+          /* ignore */
+        }
+      })();
+    </script>
+  </head>
+  <body class="relative z-0 min-h-dvh antialiased">
+    <ScrollProgress />
+    <Snowfall />
+    <div id="site-content" class="relative z-10">
+      <slot />
+    </div>
+    <FloatingControls />
+  </body>
+</html>

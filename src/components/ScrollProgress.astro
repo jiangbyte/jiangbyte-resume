@@ -1,0 +1,33 @@
+---
+/** 顶部阅读进度条：由通用设置开关控制 */
+---
+
+<div
+  id="scroll-progress"
+  class="pointer-events-none fixed inset-x-0 top-0 z-[60] h-0.5 origin-left bg-primary/80"
+  style="transform: scaleX(0);"
+  aria-hidden="true"
+></div>
+
+<script>
+  import { getScrollProgress } from '@/lib/prefs';
+
+  const bar = document.getElementById('scroll-progress');
+
+  function update() {
+    if (!bar) return;
+    const off = document.documentElement.classList.contains('scroll-progress-off') || !getScrollProgress();
+    bar.hidden = off;
+    bar.style.opacity = off ? '0' : '1';
+    if (off) return;
+    const doc = document.documentElement;
+    const max = Math.max(1, doc.scrollHeight - window.innerHeight);
+    const p = window.scrollY / max;
+    bar.style.transform = `scaleX(${Math.min(1, Math.max(0, p))})`;
+  }
+
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  window.addEventListener('home:prefs-change', update);
+</script>

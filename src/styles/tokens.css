@@ -1,0 +1,59 @@
+/* Soft Ice 冰蓝 token（对齐 code-guide shadcn 主题） */
+:root {
+  --background: 210 20% 99%;
+  --foreground: 215 18% 18%;
+
+  --card: 210 20% 99%;
+  --card-foreground: 215 16% 12%;
+
+  --primary: 207 62% 56%;
+  --primary-foreground: 210 40% 98%;
+
+  --secondary: 207 30% 95%;
+  --secondary-foreground: 215 16% 12%;
+
+  --muted: 207 32% 94%;
+  --muted-foreground: 215 12% 40%;
+
+  --accent: 207 36% 93%;
+  --accent-foreground: 215 16% 12%;
+
+  --border: 207 20% 88%;
+  --ring: 207 55% 52%;
+
+  --radius: 0.75rem;
+
+  /* 顶栏毛玻璃底 */
+  --capsule-bg: color-mix(in oklab, hsl(210 20% 99%) 78%, transparent);
+  --capsule-shadow:
+    0 0.75rem 2rem -1rem rgb(107 168 224 / 0.3),
+    0 0.25rem 0.75rem -0.5rem rgb(40 60 90 / 0.12);
+}
+
+.dark {
+  --background: 215 22% 12%;
+  --foreground: 210 18% 93%;
+
+  --card: 215 20% 14%;
+  --card-foreground: 210 18% 93%;
+
+  --primary: 207 55% 68%;
+  --primary-foreground: 215 30% 14%;
+
+  --secondary: 215 18% 20%;
+  --secondary-foreground: 210 16% 96%;
+
+  --muted: 215 20% 20%;
+  --muted-foreground: 210 12% 68%;
+
+  --accent: 215 22% 22%;
+  --accent-foreground: 210 16% 96%;
+
+  --border: 215 16% 24%;
+  --ring: 207 50% 62%;
+
+  --capsule-bg: color-mix(in oklab, hsl(215 22% 14%) 82%, transparent);
+  --capsule-shadow:
+    0 0.75rem 2rem -1rem rgb(0 0 0 / 0.65),
+    inset 0 1px 0 rgb(255 255 255 / 0.04);
+}
