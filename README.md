@@ -1,17 +1,8 @@
-# jiangbyte-resume
+# Soft Ice Resume
 
-简历子站：`https://resume.jiangbyte.cn`。轻量 Astro 静态页，视觉对齐博客「冰蓝 Soft Ice」。
+轻量 Astro 静态简历单页，视觉风格对齐「冰蓝 Soft Ice」。
 
-根域博客仍由 [code-guide](../code-guide)（摸鱼猫泡泡）承载：`https://jiangbyte.cn`。
-
-## 目录职责
-
-| 仓库 | 域名 | 远端目录（示例） |
-|------|------|------------------|
-| **code-guide**（博客） | `https://jiangbyte.cn` | `/opt/nginx-gateway/html` |
-| **jiangbyte-resume**（本仓 · 简历） | `https://resume.jiangbyte.cn` | `/opt/nginx-gateway/html-resume` |
-
-`deploy.sh` 默认 `DEPLOY_REMOTE_DIR=/opt/nginx-gateway/html-resume`，与博客分开，避免 `rsync --delete` 互相覆盖。
+适合作为博客 / 主站之外的独立简历子站部署；与博客静态目录分开，避免 `rsync --delete` 互相覆盖。
 
 ## 开发
 
@@ -27,28 +18,29 @@ pnpm preview
 ```bash
 pnpm deploy
 
-# 或显式指定
-DEPLOY_SSH_HOST=jiangbyte DEPLOY_REMOTE_DIR=/opt/nginx-gateway/html-resume pnpm deploy
+# 或显式指定 SSH Host 与远端目录
+DEPLOY_SSH_HOST=myserver DEPLOY_REMOTE_DIR=/var/www/html-resume pnpm deploy
 ```
 
-密钥与服务器地址写在本机 `~/.ssh/config`，不要提交进仓库。
+`scripts/deploy.sh` 通过环境变量配置目标机与目录；密钥与服务器地址写在本机 `~/.ssh/config`，不要提交进仓库。
 
 ## Nginx / DNS（上线时）
 
-1. DNS：`resume.jiangbyte.cn` → 服务器。
-2. Nginx：`resume.jiangbyte.cn` 的 `root` 指向 `html-resume`。
-3. 根域 `jiangbyte.cn` 继续指向博客 `html`（code-guide），**不再**把根域改成简历站。
-4. 博客 `config/site.yaml` 的 `site.url` 保持 `https://jiangbyte.cn/`。
+1. 为简历子域配置 DNS。
+2. Nginx `root` 指向简历静态目录（与博客目录分离）。
+3. 站点 URL 在 `astro.config.mjs` 的 `site` 中配置。
 
 ## 结构
 
 ```
 src/
-  components/   Hero · 经历时间轴 · Snowfall · SiteSettings …
+  components/   Hero · 经历 · Snowfall · SiteSettings …
   data/         resume.ts · projects.ts · site.ts
   lib/          prefs.ts · snowflake.ts · snow-field.ts
   pages/        index.astro
 scripts/deploy.sh
 ```
 
-偏简历向单页；项目明细引导到博客 / jiangfolio。不包含内容集合、Pagefind、写作室。
+偏简历向单页；项目明细可外链到博客项目集。不包含内容集合、Pagefind、写作室。
+
+内容与外链请改 `src/data/` 下的配置文件。
