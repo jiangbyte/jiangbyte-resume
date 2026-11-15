@@ -8,10 +8,10 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
 # 可通过环境变量覆盖，例如：
-#   DEPLOY_SSH_HOST=myserver DEPLOY_REMOTE_DIR=/opt/nginx-gateway/html-resume pnpm run deploy
+#   DEPLOY_SSH_HOST=myserver DEPLOY_REMOTE_DIR=/opt/nginx-gateway/sites/resume pnpm run deploy
 # 默认 REMOTE_DIR 指向 resume 子站目录，切勿与博客 html 共用，避免 --delete 互相覆盖。
 SSH_HOST="${DEPLOY_SSH_HOST:-jiangbyte}"
-REMOTE_DIR="${DEPLOY_REMOTE_DIR:-/opt/nginx-gateway/html-resume}"
+REMOTE_DIR="${DEPLOY_REMOTE_DIR:-/opt/nginx-gateway/sites/resume}"
 DIST_DIR="${DEPLOY_DIST_DIR:-dist}"
 
 if [[ ! -d node_modules ]]; then
