@@ -72,24 +72,15 @@ const contactItems = [
       </ul>
     </div>
 
-    {/* 本地头像（jiangfolio）；点击进组织页 */}
-    <a
-      href={links.githubOrg}
-      class="mx-auto shrink-0 sm:mx-0"
-      rel="noopener noreferrer"
-      target="_blank"
-      title={`GitHub @${githubAvatar.user}`}
-      aria-label={`GitHub @${githubAvatar.user} 头像`}
-    >
-      <img
-        src={githubAvatar.src}
-        width="120"
-        height="120"
-        alt={`${profile.name}（@${githubAvatar.user}）`}
-        class="size-24 rounded-full bg-muted object-cover shadow-[var(--capsule-shadow)] ring-2 ring-primary/20 transition hover:ring-primary/40 sm:size-[7.5rem]"
-        loading="eager"
-        decoding="async"
-      />
-    </a>
+    {/* 本地头像（jiangfolio），仅展示不跳转 */}
+    <img
+      src={githubAvatar.src}
+      width="120"
+      height="120"
+      alt={`${profile.name}（@${githubAvatar.user}）`}
+      class="mx-auto size-24 shrink-0 rounded-full bg-muted object-cover shadow-[var(--capsule-shadow)] ring-2 ring-primary/20 sm:mx-0 sm:size-[7.5rem]"
+      loading="eager"
+      decoding="async"
+    />
   </div>
 </section>
