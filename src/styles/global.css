@@ -110,6 +110,16 @@
     text-align: justify;
   }
 
+  /* Hero 自我介绍区不受两端对齐影响，避免移动端折行末行左偏 */
+  #site-content main .hero-intro {
+    text-align: center;
+  }
+  @media (min-width: 640px) {
+    #site-content main .hero-intro {
+      text-align: left;
+    }
+  }
+
   /*
    * 设置弹窗 + 浮动控件：彻底隔离阅读偏好
    * （即便误写全局样式，这里也用固定值盖住）

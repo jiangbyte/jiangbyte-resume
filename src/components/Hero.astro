@@ -45,19 +45,25 @@ const contactItems = [
       decoding="async"
     />
 
-    <div class="min-w-0 flex-1 text-center sm:text-left">
+    <div class="hero-intro flex w-full min-w-0 flex-1 flex-col items-center sm:items-start">
       <h1 class="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">{profile.name}</h1>
-      <p class="mt-3 text-base text-foreground/90 sm:text-lg">
-        {profile.role}
-        <span class="mx-2 text-border">·</span>
-        <span class="text-muted-foreground">{profile.location}</span>
-        <span class="mx-2 text-border">·</span>
-        <span class="text-muted-foreground">{profile.education}</span>
-      </p>
-      <p class="body-text mx-auto mt-4 max-w-2xl text-muted-foreground sm:mx-0">{profile.summary}</p>
 
+      {/* 移动端两行居中，避免「贵州 ·」与学历拆行错位；桌面仍一行 */}
+      <p class="mt-3 text-base text-foreground/90 sm:text-lg">
+        <span class="block sm:inline">{profile.role}</span>
+        <span class="mx-2 hidden text-border sm:inline">·</span>
+        <span class="mt-1 block text-muted-foreground sm:mt-0 sm:inline">
+          {profile.location}
+          <span class="mx-2 text-border">·</span>
+          {profile.education}
+        </span>
+      </p>
+
+      <p class="body-text mt-4 max-w-2xl text-muted-foreground">{profile.summary}</p>
+
+      {/* 移动端：整列居中、行内左齐；桌面横排 */}
       <ul
-        class="mt-6 flex flex-col items-center gap-y-2.5 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center sm:justify-start sm:gap-x-4"
+        class="mt-6 flex w-max flex-col items-start gap-y-2.5 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:gap-x-4"
         aria-label="联系方式"
       >
         {
