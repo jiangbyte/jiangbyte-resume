@@ -72,9 +72,9 @@ const contactItems = [
       </ul>
     </div>
 
-    {/* GitHub 头像：按用户名拉取，换头像后自动跟随 */}
+    {/* 本地头像（jiangfolio）；点击进组织页 */}
     <a
-      href={links.githubUser}
+      href={links.githubOrg}
       class="mx-auto shrink-0 sm:mx-0"
       rel="noopener noreferrer"
       target="_blank"
@@ -83,14 +83,12 @@ const contactItems = [
     >
       <img
         src={githubAvatar.src}
-        srcset={`${githubAvatar.src} 1x, ${githubAvatar.src2x} 2x`}
         width="120"
         height="120"
         alt={`${profile.name}（@${githubAvatar.user}）`}
-        class="size-24 rounded-full object-cover shadow-[var(--capsule-shadow)] ring-2 ring-primary/20 transition hover:ring-primary/40 sm:size-[7.5rem]"
+        class="size-24 rounded-full bg-muted object-cover shadow-[var(--capsule-shadow)] ring-2 ring-primary/20 transition hover:ring-primary/40 sm:size-[7.5rem]"
         loading="eager"
         decoding="async"
-        referrerpolicy="no-referrer"
       />
     </a>
   </div>

@@ -7,12 +7,11 @@ export const links = {
   gitee: 'https://gitee.com/jiangbyte',
 } as const;
 
-/** GitHub 用户名头像：随账号更换自动更新（GitHub CDN 短缓存） */
+/** 头像：本地静态资源（来自 jiangfolio 组织头像，避免依赖 GitHub CDN） */
 export const githubAvatar = {
-  user: 'jiangbyte',
-  /** 按用户名解析，不写死 avatar id，换头像后无需改代码 */
-  src: 'https://github.com/jiangbyte.png?size=240',
-  src2x: 'https://github.com/jiangbyte.png?size=480',
+  user: 'jiangfolio',
+  src: '/avatar.webp',
+  src2x: '/avatar.webp',
 } as const;
 
 export const siteMeta = {
